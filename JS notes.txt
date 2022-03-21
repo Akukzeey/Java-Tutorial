@@ -1,0 +1,806 @@
+????//What is a  SCOPE //????
+???//Question1//??? Create  function called doubleArray that includes an array and return the function by multiplying it by 2 times
+???//Question2//??? Create a function of (x,y) and store it in a variable called product and multiply the function by 2 times
+???//Question2//??? Write a function called randomlyPick that accepts 2 function that randomly calls one function but not both
+
+
+Variable "visibility"
+*The location where a variable is defined and dictates where we have access to that variable.
+
+
+Q1     function doubleArr(arr){
+          let result=[];
+           for (let num of arr){
+               let double=num*2;
+               result.push(double)
+           }
+           return result;
+       }
+
+       console.log(doubleArr([1,2,3]))
+
+
+
+
+Q2    const product=function (x,y){
+          return x*y;
+      }
+
+      console.log(product(2,3))
+
+
+
+//HIGHER ORDER FUNCTIONS//
+*Functions that operate on/with other functions.They can:
+  {a}Accept other functions as arguments
+  {b}Return a function
+
+Q3      function rage() {
+            console.log('I HATE EVERYTHING')
+        }
+
+        function sad() {
+            console.log('boohoo im so sad')
+        }
+
+        function randomlyPick(f1,f2) {
+         let randomNO=Math.random()
+            console.log(randomNO)
+         if (randomNO<0.5){
+             return f1()
+         }
+           return f2()
+        };
+
+
+        console.log(randomlyPick(rage,sad))
+
+
+
+//ARRAY CALLBACK FUNCTIONS//
+
+
+///     CALLBACK FUNCTIONS      ///
+
+these are functions passed into another function as an argument, which is invoked inside the outer function
+
+
+ * //forEach//
+          const number=[2,3,6]
+
+          number.forEach(function (num) {
+              console.log(num*2)
+           })
+
+ * //MAP//
+
+    Creates a new array with the result of calling a callback on every element in the array
+
+      const numbers=[20,21,22,23,24,25,26,27];
+
+      const numberDetails=numbers.map(function (n){
+        return   {
+              value: n,
+              isEven:n%2===0,
+          }
+      })
+
+     console.log(numberDetails)
+
+     note:numbers don't change cause we created a new variable called numberDetails
+         //forEach is similar to map but it doesn't store them in an array neither does it return a value
+
+ * //FILTER//
+
+-Creates a new array with al elements that pass the test implemented by the provided function
+Filter is a boolean method
+
+const nums=[9,8,7,6,5,4,3,2,1]
+const odds=num.filter(n=>{
+  return n%2===1
+})
+
+//[9,7,5,3,1]
+
+const smallNums=nums.filter(n=>n<5);
+//[4,3,2,1]
+
+ * //FIND//
+
+ -Return the value of the first element in the array that satisfies the provided testing function i.e.
+
+
+  const books=[{
+          title:'Good ones',
+          authors:['Terry Prachett','Neil Gaiman'],
+          rating:4.25
+       },
+      {
+          title:'Bone:The Complete Edition',
+          authors:['Jeff Smith'],
+          rating:4.42,
+      },
+      {
+          title:'American bitchez',
+          authors:['Neil Gaiman'],
+          rating:4.11
+      },
+      {
+          title:'A Gentleman in Moscow',
+          authors:['Amor Towels'],
+          rating:4.36
+      },]
+
+  const author=books.find(auth=>auth.authors.includes('Neil Gaiman'))
+
+      console.log(author)
+
+ //  {
+         title:'Good ones',
+         authors:['Terry Prachett','Neil Gaiman'],
+         rating:4.25
+     },
+
+ note:there are 2 Neil Gaiman but it only brings the first one cause find only brings the first value
+
+ * //REDUCE//
+
+-This executes a reducer function on each element of the array,resulting in a single value
+
+[3,5,7,9,11].reduce((total,currentValue){
+      return total + currentValue
+},100)
+          //100
+Callback          total             currentValue               return value
+ first call         3                      5                     8
+ second call        8                      7                     15
+ third   call       15                     9                     24
+ fourth call         24                    11                    35 + 100
+
+  NOTE:The 100 between the curly brackets and the bracket is the initial value and it is set to 100 you can do that with reduce
+
+-You can also use reduce to find the maxValue in an array for example students grades and you wanna find the person who got the highest grade you can use reduce i.e
+  const grades=[87,64,96,92,88,99,73,70,64];
+
+  const maxGrade=grades.reduce((max,currentVal)=>(
+          return Math.max(max,currentVal)
+  ))
+
+
+
+  console.log(maxGrade)
+  //99
+
+ NOTE:Math.max() is a built in method just like Math.random() or Math.floor()
+     this helps in finding the maximum array or the highest score we can also find the lowest score by using //Math.min()//
+
+ * //SOME//
+  -Similar to every but return true if ANY of the array elements pass the test function
+
+ const words=['doh','dig','log','bag','wag'];
+
+    words.every(word=>{
+       return word.length ===3;
+       })
+       //true
+
+       words.every(w=>{
+         let lastLetter=w[w.length-1];
+         return lastLetter==='h'
+         })
+     //Do any words end with letter h
+         //true
+
+
+ * //EVERY//
+ -Tests whether all elements in the array pass the provided function.it returns Boolean value.
+
+    const words=['doh','dig','log','bag','wag'];
+
+        words.every(word=>{
+           return word.length ===3;
+           })
+           //true
+
+           words.every(w=>{
+             let lastLetter=w[w.length-1];
+             return lastLetter==='h'
+             })
+         //Do every words end with letter h
+             //false
+
+ * //SORT//
+ -Explanation:
+     arr.sort(compareFunc(a,b))
+      *If compareFunc(a,b) returns less than 0
+      -sort a before b
+      *if compareFunc (a,b) returns 0
+        -leave a and b unchanged with respect to each other
+      *if compareFunc(a,b) returns greater than 0
+        -sort b before a
+
+  const prices=[400.50,3000,99.99,35.99,12.00,9500]
+
+    //ascending order from smallest to largest//
+  const ascPrices=prices.sort((a,b)=>a-b);
+    [12.00,35.99,99.99,400.50,3000,9500]
+
+    //descending order from largest to smallest//
+   const descPrices=prices.sort((a,b)b-a)
+    [9500,3000,400.50,99.99,35.99,12.00]
+
+   note:Sort changes the value of prices in the array unlike other methods if you try and find the value of prices it will be the value of descending prices which is
+                    // [9500,3000,400.50,99.99,35.99,12.00]
+
+
+                   //ARROW FUNCTION//
+-This works just like function callbacks but it's shorter
+-Here is the syntax
+
+ * const square=(x)=>{
+      return x * x;
+   }
+
+   console.log(square(4))
+
+ * const isEven=num=>{
+      return num%2===0;
+   }
+
+   console.log(isEven(20))
+
+   note:You can choose to remove the parens if it only accept one argument but if the parens accept to arguments like (x,y) if you remove it it will throw an error
+
+              //IMPLICIT RETURN IN ARROW FUNCTION//
+ -You can make the code even shorter by using implicit return with this you dont even have to use the return value or the curly bracket{} example:
+
+       const nums=[1,2,3,4,5,6,7,8];
+
+     const doubles1=nums.map(n=> n * 2)
+
+        console.log(doubles1)
+
+   note:We can use implicit return if we can only return 1 value i.e
+
+      const nums=[1,2,3,4,5,6,7,8];
+
+       const partyList=nums.map(n=>{
+          if (n%2===0)return 'even';
+             return 'odd'                   //A normal arrow function.We can't use implicit returns since it's returning two return values,one return value or the  other value.
+         })
+
+            console.log(partyList)
+
+
+
+            //DEFAULT PARAMETERS//
+  -This helps in passing a default value instead of defining it when we are console logging i.e
+                        function multiply(a,b=2 ){
+                            return a * b;
+                        }
+
+                        console.log(multiply(4))  //8//
+
+                  //We are just passing the {a} value instead of both cause we already defined the value on the function
+  -We should put the default parameter on the end of the function like: function multiply(a,b=2 ) for it to work
+
+
+                    ///SPREAD///
+ -Spread syntax allows an iterable such as an array to be EXPANDED in places where zero or more arguments (for function calls) or elements (for array literals) are expected,or an object expresssion to be expanded in places where zero or more key-value pairs (for object literals) are expected
+
+(1)SPREAD FOR FUNCTION CALLS
+   Expands an iterable (array,string,etc.) into a list of arguments.
+
+            const colors=['red','yellow','blue','green','white']
+
+           const giveMeFour=(a,b,c,d,e)=>{
+               console.log('a',a);
+               console.log('b',b);
+               console.log('c',c);
+               console.log('d',d);
+               console.log('e',e);
+           }
+
+
+            console.log(giveMeFour(...colors))
+               // a red
+               // b yellow
+               // c blue
+               // d green
+               // e white
+
+(2)SPREAD IN ARRAY LITERALS
+   Creates a new array using an existing array.Spreads the element from one array into a new array
+
+      const num1=[1,2,3,4]
+      const num2=[5,6,7,8]
+      const num3=[9,10,11,12]
+
+      const newNums=[...num1,...num2,...num3]
+
+      console.log(newNums)
+       //[
+            1,  2, 3, 4,  5,
+            6,  7, 8, 9, 10,
+           11, 12
+         ]
+
+ (3)SPREAD IN OBJECT LITERALS
+    Copies properties from one object into another object literal.
+
+       const feline={
+           legs:4,
+           family:'Felidae'
+       };
+
+       const canine={
+           family: 'caninae',
+           furry:true,
+           legs:4
+       }
+
+
+        const catDog={...feline,
+              ...canine}
+
+             console.log(catDog)
+
+       //{ legs: 4, family: 'caninae', furry: true }
+
+    NOTE:Notice how legs:4 is one and we put the same key in both objects this happens cause in objects things overwrite and if its the same it only brings one value
+
+    const tripod={
+    ...canine,
+    legs:3
+    }
+    console.log(tripod)
+
+    //  tripod{ family:"caninae"
+                furry:true
+                legs:3
+    }
+
+    NOTE:By putting legs:3 this runs after the variable caninae runs which makes it take the 2nd legs and that is 3
+
+
+                    ///REST///
+ -This collect all remaining arguments into an actual array
+      /1/Using rest as an array for finding the total
+          function sum(...nums) {
+              return nums.reduce((total,currVal)=>{
+                   return total+currVal
+              })
+          }
+              console.log(sum(2,3,4,5))
+                      //14
+
+       /2/We can tell it to collect the remaining arguments in the arguments functions
+                   function docs(first,lastname,...titles) {
+                        console.log('first',first)
+                        console.log('last',lastname)
+                        console.log('titles',titles)
+                    }
+
+            console.log(docs('Farouk','Ahmed','web developer','artist'))
+
+                 //  first Farouk
+                     last Ahmed
+                     titles [ 'web developer', 'artist' ]
+
+        /3/We can use it with an arrow function
+             const multiply = (...nums) => (
+                 nums.reduce((total,currentVal)=> total * currentVal)
+             )
+
+
+             console.log(multiply(2,3,4))
+                  //24
+
+        //   DESTRUCTURING   //
+    -A short,clean syntax to 'unpack':
+        *Values from arrays
+        *Properties from objects
+       into distint variables.
+
+    1:DESTRUCTURING ARRAYS
+   const raceResults=[
+       'Eluid Kipchoge',
+       'Feyisa Lelis',
+       'Galen Rupp',
+       'Ghirmay Ghrbtrslassie',
+       'Alphonce Simbu',
+       'Jared Ward'
+   ];
+
+
+     const [gold,silver,bronze,...others]=raceResults
+        console.log([gold,silver,bronze])
+         // [ 'Eluid Kipchoge', 'Feyisa Lelis', 'Galen Rupp' ]
+
+    *You can also skip one value by adding commas
+         console.log([gold,,bronze])
+          //  [ 'Eluid Kipchoge', 'Feyisa Lelis', 'Galen Rupp' ]
+
+    *You can use rest to find other values in the array
+        //console.log([...others ])
+            [ 'Ghirmay Ghrbtrslassie', 'Alphonce Simbu', 'Jared Ward' ]
+
+      2:DESTRUCTURING OBJECTS
+     const runner={
+         first:'Eluid',
+         second:'Kipchoge',
+         country:'Kenya',
+         title:'Elder of the order of the Golden Heart of Kenya'
+     }
+
+     const {first,second,...others}=runner
+
+     console.log({first,second,...others})
+     //{
+         first: 'Eluid',
+         second: 'Kipchoge',
+         country: 'Kenya',
+         title: 'Elder of the order of the Golden Heart of Kenya'
+       }
+
+    {a}NESTED DESTRUCTURING
+  -We can nest destructuring arrays of object or any type of nest.
+       const runner = [{
+           first: 'Eluid',
+           second: 'Kipchoge',
+           country: 'Kenya',
+       },
+           {
+               first: 'Feyis',
+               second: 'Lilesa',
+               country: 'Ethiopia',
+           },
+
+           {
+               first: 'Dybala',
+               second: 'Y',
+               country: 'United States',
+           },
+           {
+               first: 'Ayman',
+               second: 'z',
+               country: 'United States',
+           },
+           {
+               first: 'Mamitho',
+               second: 'N',
+               country: 'United States',
+           },
+           {
+               first: 'Zxrah',
+               second: 'A',
+               country: 'United States',
+           },
+       ];
+
+     //To get the first name of Eluid you:
+         const [{first}]=runner
+         console.log({first})
+        // { first: 'Eluid' }
+
+     //To get the fifth name you:
+       const [,,,,numberFive]=runner
+       const {first:name}=numberFive
+       console.log(name)
+       //Mamitho
+
+     3:DESTRUCTURING FUNCTIONS IN PARAMETERS
+  -We can destructure code using function in object and arrays as well
+
+        {a}Destructuring objects using functions
+        const runner={
+            first:'Eluid',
+            last:'Kipchoge',
+            country:'Kenya',
+            title:'Elder of the order of the Golden Heart of Kenya'
+        }
+            function print({first,last,title}) {
+                console.log(`${first} ${last},${title}`)
+            }
+               console.log(print(runner))
+
+           //Eluid Kipchoge,Elder of the order of the Golden Heart of Kenya
+
+        {b}Destructuring arrays using functions
+         const response=[
+             'HTTP/1.1',
+             '200 OK',
+             'application/json'
+         ]
+
+         function parseResponse([protocal,statusCode,contentType]) {
+             console.log(`status:${statusCode}`)
+         }
+
+         console.log(parseResponse(response))
+
+         //status:200 OK
+
+
+       /// COMPUTED PROPERTIES //
+
+ -With computed properties we can use a variable as a key name in an object literal property
+                   const role='host'
+                   const name='acookie'
+                   const role2='director'
+                   const name2='arturo'
+
+                        const team={
+                           [role]:name,
+                           [role2]:name2
+                        }
+                      console.log(team)
+                      //{ host: 'acookie', director: 'arturo',}
+
+ -We can add another key inside the object by using function and spread and that is
+                 const addProp=(obj,k,v)=>(
+                    {...obj,[k]:v}
+                 )
+
+                 const res=addProp(team,'happy',':)')
+                 console.log(res)
+               //{ host: 'acookie', director: 'arturo', happy:':)'}
+
+
+        /// ADDING METHODS TO OBJECT ///
+
+ -We can add functions as properties on object and they are called  METHODS
+                const math={
+                  numbers:[1,2,3,4],
+                    add:function(x,y){
+                        return x+y;
+                    },
+                    multiply:function(x,y){
+                        return x*y;
+                    },
+                }
+    // SHORTHAND METHOD SYNTAX  //
+            const auth={
+                username:'tommybot',
+                login(){
+                    console.log('YOU ARE LOGGED IN')    //a function written in a shorthand method
+                }
+            }
+
+                    ///// THIS /////
+    -THIS references the object that is executing the current function
+    -If the function or method is inside an object it executes the current object
+    -if the function is a regular function it executes the global or the window in browsers
+
+    // THIS IN METHODS //
+  -Use the keyword this to access other properties on the same object
+    const person={
+        first:'Acookie'
+        last:'Senior'
+        fullName(){
+           return `${this.first} ${this.last}`
+        }
+    }
+
+    console.log(person.fullName)
+       //'Acookie Senior'
+
+     person.last='brown';
+
+    console.log(person.fullName)
+           //'Acookie brown'
+
+  NOTE:The value of THIS depends on the INVOCATION CONTEXT the function is used in i.e like the example above this in fullName is set on the whole object which is called person and that reference to the object which is person
+     -But if we create a variable and we call it just as a method itself without putting person.fullName that will reference the whole window or globe
+     person.fullName=>reference to the object
+
+     const fullName=person.fullName
+          fullName=>The value of this will reference the whole window
+
+     -Arrow function don't get their own this
+
+
+           ////    DOCUMENT OBJECT MODEL  (DOM)   ////
+  -The DOM is a Javascript representation of a webpage
+  -It's your JS 'window' into the contents of a webpage
+  -It's just a bunch of objects that you can interact with via JS
+
+          /// DOCUMENT //
+  -The Document object is our entry point into the world of the DOM.It contains representations of all the content on a page,plus tons of usefull methods and properties
+
+    // SELECTING //
+
+    {a}getElementsById
+     -This is a method in a document that makes it able to select an id in the document
+       syntax:
+              document.getElementById('main') =this will give us html code so we create a variable from it to give us an object
+
+              const p=document.getElementById('main')
+                    console.dir(p) =this will give us the object
+
+    {b}getElementsByTagName
+      -This selector selects the type of element e.g selecting all the h1 tags or selection all the images
+      -When you call getElementByTagName it returns an array like value which isnt really a array but we can iterate over it.
+          syntax:
+                 document.getElementByTagName('h3')
+
+    {c}getElementsByClassName
+   -As the name suggest this selects classes in the document
+     syntax:
+            document.getElementsByClassName('special')
+
+
+     {d}querySelector
+      -This works just like the other selectors but we can define it even further
+             -In class selector we use: document.querySelector('.special')
+             -In id selector we use:  document.querySelector('#main')
+             -In tag selectors we use: document.querySelector('h1')
+      -When you use querySelector like how it used above it brings out the first element but if we want it to select everything in the tag or class we use:
+          document.querySelectorAll('h3') //for all h1 tags
+             or
+          document.querySelectorAll('.special') //for all class of special
+
+
+                ///     PROPERTY AND METHODS     ///
+      //  innerText  //
+      -The innerText property sets or returns the text content of an element.
+      -This returns text content of the element and all its children, without CSS hidden text spacing and tags.
+              syntax:
+                const ul=document.querySelector('ul')
+                 ul.innerText
+
+     //  textContent  //
+      -The textContent property sets or returns the text content of the specified node, and all its descendants.
+      -This returns The text content of the element and all descendaces, with spacing and CSS hidden text, but without tags.
+           syntax:
+                   const ul=document.querySelector('ul')
+                                 ul.textContent
+
+      //  innerHTML  //
+      -Inner html property returns the text content of the element,spacing and tags
+       -You can update the html element using innerHTML
+            example:
+                     <h1>My webpage</h1>
+                      const h1=document.querySelector('h1')
+                        h1.innerHTML+="<b>!!!!</b>"
+                            //<h1>My webpage !!!!</h1>
+
+      //  value  //
+      -This helps us return the value from a form input
+       syntax:
+              const inputs=document.querySelectorAll('input')
+              inputs[0].value
+               //'bear name'
+      -To help us find the value in an input type of checkbox we use....
+        syntax:
+               const inputs=document.querySelectorAll('input')
+               inputs[2].checked
+               //false
+
+       //  src  //
+       -This helps change the image in html using js
+          syntax:
+                   const img=document.querySelectorAll('img')
+                   img.src='https://unsplash.com/photos/nKC772R_qog?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink'
+
+       // href  //
+       -We can change where we want the anchor=a tag to go by using href
+         syntax:
+                    const a=document.querySelectorAll('a')
+                    a.href='https://unsplash.com/photos/nKC772R_qog?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink'
+
+       // getAttribute and setAttribute //
+       -getAttribute helps us to get an  attribute in html
+             syntax:
+                   const range=document.querySelector('input[type="range"]')
+                   range.getAttribute('type')
+                    //range
+
+       -setAttribute helps us change the value in an attribute
+             syntax:
+                   const range=document.querySelector('range')
+                    range.setAttribute('type','radio')
+                    //<input type="radio" name="" id="">
+
+       // parentElement children sibling//
+       -To get the parent of an element has been simplified when it comes to using properties and methods
+                syntax:
+                       const firstLI=document.querySelector('li')
+                       firstLI.parentElement
+                         //<ul>...</ul>
+
+       -To get the children of an element we use
+           syntax:
+                  const ul=document.querySelector('ul')
+                  ul.children
+                    //HTMLCollection [li.special,li,li.special]
+
+       -To get the sibling of an element we use
+          syntax:
+                 const Firstli=document.querySelector('li')
+                 FirstLi.nextElementSibling        //getting the next sibling
+                  //<li>second thing</li>
+
+                 const secondLi=document.querySelector('li')
+                 secondLi.previousSibling          //the previous sibling
+                  //<li>first thing</li>
+
+          //style//
+         -You can change the style of an element using js and by changing it becomes an inline style which will overwrite any other style if you had already indicated
+         -You can also change style of multiple element using a loop
+            syntax:
+                const allLis=document.querySelectorAll('li')
+                const colors=['red','orange','yellow','green','blue','purple']
+
+                allLis.forEach((li,i)=>{
+                      let color=colors[i]
+                      li.style.color=color
+                })
+
+          //getComputedStyle//
+         -With this property we access style values like:backgroundColour,dsiplay,position,color e.t.c
+                    syntax:
+                           const li=document.querySelector('li')
+                           const style=li.getComputedStyle
+                           style.color
+                             //rgb(100 0 100)
+
+          //classList//
+          -This is a better way to change styles in css than just using styleJs
+          -We can also connect classList with random styles in  css.
+                  syntax:
+                         const todo=document.querySelectorAll('#todos .todo')
+                         for(const toDoElement of todo){
+                               toDoElement.classList.toggle('done')
+                               }
+          -Toggle is a built in method in classList that turns on and off a style in an element
+          -There are other methods like add() remove().
+
+          //createElement//
+          -We can create an element using createElement from scratch and add them to the DOM.
+                    syntax:
+                           const newh2=document.createElement('h2')
+                           newh2.innerText='i love animals'
+                           li.appendChild(newh2)    //This will put it as the last element in the li
+
+          //insertAdjacentElement//
+          -You can also add element using this method
+
+
+          //append & prepend//
+          -There are different ways to add elements using properties and methods in js
+          -Append and prepend are easy when you are trying to add elements
+                  syntax:
+                         const secondP=document.querySelectorAll('p')[1]
+                         const newP=document.createElement('p')
+
+                         secondP.append(newP)  //This will put the newly added element at the end
+
+                         secondP.prepend(newP)  //This will put the newly added element at the start
+
+           //removeChild remove//
+           -The same way you can add element you can remove them as well and there are different methods
+             {a}removeChild
+                       syntax:
+                              const ul=document.querySelector('section ul')
+                              const removeMe=ul,querySelector('.special')
+                              ul.removeChild(removeMe)
+                              const deleted=ul.removeChild(removeMe) //You can save the deleted element incase you want it to use somewhere else
+
+             {b}remove
+                        syntax:
+                               const h1=document.querySelector('h1')
+                               h1.remove()
+
+
+                 /////  addeventlistener /////
+          -There are different ways to  add events to an element but the best way is to addeventlistener.
+                 syntax:
+                        const btn=document.querySelector('button')
+                        btn.addeventlistener=('click',function(){
+                             console.log('DON'T FOOKIN TOUCH ME MATE..SUCK YOO MADA')
+                        })
+
+
+
+
