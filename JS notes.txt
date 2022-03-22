@@ -801,6 +801,13 @@ Callback          total             currentValue               return value
                              console.log('DON'T FOOKIN TOUCH ME MATE..SUCK YOO MADA')
                         })
 
+                 //////  KEYS   /////
+          -This helps us know if there is a key that is returned and there are different types of key events
+          -keydown and keyup this works almost the same way it listens for any type wriiten from letters to arrow keys,backspace,shift and everyother type of key
+          -The only difference it will bring one key event when holding and after relasing bring the other key event
+          -keypress fires when a value is returned or shows up example:letters,punctuation marks and last but not least the enter key.Other types of keys aren't returned like the arrowkeys and the shift keys cause it doesnt show anything.
+
+          Q// Create an input of text and an input of ul.Using javascript make the value of the input to be saved as an li inside ul
 
 
-
+          -To change the mirrow of an image we use variable.style.transform='scale(-1,1)'
